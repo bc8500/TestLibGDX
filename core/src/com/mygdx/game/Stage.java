@@ -25,10 +25,10 @@ public class Stage {
 
     public Stage() {
         player=new Player("masterchieftpose.jfif");
-        platformList.add(new Platform("badlogic.jpg",0,0,800,20));
+        platformList.add(new Platform("badlogic.jpg",-400,0,1600,20));
         platformList.add(new Platform("masterchieftpose.jfif", 40, 40,400,20));
 
-        enemiesList.add(new Enemy("badlogic.jpg" , 100,60,40,40));
+        enemiesList.add(new Enemy("badlogic.jpg" , 300,60,40,40));
 
         playerCollidables.addAll(platformList);
         playerCollidables.addAll(enemiesList);
@@ -46,18 +46,22 @@ public class Stage {
         for (Platform platform:platformList ) {
             platform.update();
         }
-
+        for (Enemy enemy:enemiesList ) {
+            enemy.update();
+        }
         player.update(playerCollidables);
 
 
     }
     public void draw(SpriteBatch batch){
-       // batch.draw(marioBackground, 0, 0, 800, 480);
+        batch.draw(marioBackground, 0, 0, 1600, 960);
 
         for (Platform platform:platformList ) {
             platform.draw(batch);
         }
-
+            for (Enemy enemy:enemiesList ) {
+            enemy.draw(batch);
+        }
         player.draw(batch);
     }
 

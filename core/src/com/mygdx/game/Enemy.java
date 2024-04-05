@@ -11,6 +11,6 @@ public class Enemy extends CollidableObject{
 
     }
     public void takeDamage(){
-
+health-=3;
     }
 }
