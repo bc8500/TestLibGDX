@@ -5,15 +5,14 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 
 
-public class Player {
+public class Player extends CollidableObject{
     double health = 100;
     double damage = 3;
-    Rectangle hitbox;
-    Texture img;
+
 
     boolean canJump = true;
 
@@ -25,13 +24,16 @@ public class Player {
     final float FRICTION = 3 / 30f;
 
     public Player(String path) {
-        this.img = new Texture(path);
-        hitbox = new Rectangle(0, 100, 50, 50);
+        super(path,0, 300, 40, 45);
+
 
     }
-
     public void update(ArrayList<CollidableObject> platforms) {
-
+//System.out.println(yVelocity);
+        if (Gdx.input.isKeyPressed(Input.Keys.SPACE) && canJump || Gdx.input.isKeyPressed(Input.Keys.W) && canJump) {
+            yVelocity = JUMP_HEIGHT;
+            canJump = false;
+        }
         if (Gdx.input.isKeyPressed(Input.Keys.A)) {
             xVelocity -= speed;
         }
@@ -39,15 +41,12 @@ public class Player {
             xVelocity += speed;
         }
 
-        if (Gdx.input.isKeyPressed(Input.Keys.SPACE) && canJump) {
-            yVelocity = JUMP_HEIGHT;
-            canJump = false;
-        }
-
         if (Math.abs(xVelocity) > 4) {
             xVelocity = 4 * Math.signum(xVelocity);
         }
-
+        if (Gdx.input.isKeyPressed(Input.Keys.S)) {
+            yVelocity -= speed;
+        }
 
         yVelocity -= GRAVITY;
         xVelocity -= FRICTION * Math.signum(xVelocity);
@@ -56,8 +55,51 @@ public class Player {
         if (Math.abs(xVelocity) < (speed - FRICTION)) {
             xVelocity = 0;
         }
-        moveWithCollision(platforms);
+        //moveWithCollision(platforms);
+        CollisionInfo  collisionInfo = moveWithCollision(platforms, new Vector2(xVelocity, yVelocity));
+        if (!(collisionInfo.side == CollisionInfo.Side.NONE || collisionInfo.side == CollisionInfo.Side.BOTTOM)){
+            canJump=true;
+        }else {
+            canJump=false;
+        }
+        if(collisionInfo.side == CollisionInfo.Side.TOP) {
 
+           if (collisionInfo.object instanceof Platform){
+               yVelocity = 0;
+           }
+
+            if(collisionInfo.object instanceof KillableEnemy){
+                collisionInfo.object.dispose();
+                yVelocity =0;
+
+            }
+            else if (collisionInfo.object instanceof Enemy){
+                isActive = false;
+            }
+
+        }else {
+
+
+            if(collisionInfo.side == CollisionInfo.Side.RIGHT|| collisionInfo.side == CollisionInfo.Side.LEFT) {
+                xVelocity =0;
+
+            }
+            if(collisionInfo.side == CollisionInfo.Side.BOTTOM){
+                if (collisionInfo.object instanceof Platform || collisionInfo.object instanceof KillableEnemy) {
+                    yVelocity = 0;
+
+                }
+            }
+
+        }
+        for (int i = 0; i < platforms.size(); i++) {
+            if (platforms.get(i) instanceof Enemy){
+                if(platforms.get(i).hitbox.overlaps(hitbox) ){
+                    isActive=false;
+                }
+            }
+
+        }
 
     }
 
@@ -79,10 +121,10 @@ public class Player {
                     canJump = true;
                     yVelocity = 0;
                 }
-            } else if (object instanceof Enemy) {
-                Enemy enemy = (Enemy) object;
+            } else if (object instanceof KillableEnemy) {
+                KillableEnemy enemy = (KillableEnemy) object;
                 enemy.takeDamage();
-                ((Enemy) object).takeDamage();
+                ((KillableEnemy) object).takeDamage();
                 System.out.println(health);
             }
 
