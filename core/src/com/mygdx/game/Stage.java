@@ -12,8 +12,9 @@ public class Stage {
 
 
     Images images = new Images();
+
     String blockImage = images.getImages();
-    String playerImage = images.getImages();
+    String players = images.playerImages();
     String enemyImage = images.getImages();
     String lavaEnemy = images.lavaImage();
     String death = images.deathImage();
@@ -24,7 +25,9 @@ public class Stage {
     ArrayList<CollidableObject> playerCollidables = new ArrayList<>();
 
     private Music rainMusic;
+
     Texture background;
+
     private OrthographicCamera camera;
     final int BLOCK_SIZE = 50;
 
@@ -38,7 +41,7 @@ public class Stage {
         enemyHolder2();
         lava();
 
-
+        background = new Texture(images.getImages());
 
 
 
@@ -47,7 +50,7 @@ public class Stage {
         playerCollidables.addAll(enemiesList);
 
         rainMusic = Gdx.audio.newMusic(Gdx.files.internal("The Boondocks - Uncle Ruckus.mp3"));
-        background = new Texture(images.getImages());
+
         // start the playback of the background music immediately
         rainMusic.setLooping(true);
         camera = new OrthographicCamera();
@@ -67,9 +70,15 @@ public class Stage {
         if (cameraX < 400) {
             cameraX = 400;
         }
+        if (cameraX > 8750) {
+            cameraX = 8750;
+        }
         cameraY = player.hitbox.y;
         if (cameraY < 240) {
             cameraY = 240;
+        }
+        if (cameraY > 700) {
+            cameraY = 700;
         }
         camera.position.set(cameraX, cameraY, 0);
         camera.update();
@@ -89,8 +98,12 @@ public class Stage {
                 i--;
             }
         }
-
-
+        System.out.println("X");
+System.out.println(player.hitbox.x);
+        System.out.println("X");
+        System.out.println("Y");
+        System.out.println(player.hitbox.y);
+        System.out.println("Y");
     }
 
     public void draw(SpriteBatch batch) {
@@ -103,7 +116,25 @@ public class Stage {
 //            }
 //        }
         batch.setProjectionMatrix(camera.combined);
-        batch.draw(background, 0, 0, 1600, 960);
+
+        int x = 0;
+        int y = 0;
+        for (int i = 0; i < 10; i++) {
+            batch.draw(background, x, y, 1600, 960);
+            x += 1600;
+
+        }
+        //batch.draw(background, 0, 0, 1600, 960);
+//        batch.draw(background, 1600, 960, 1600, 960);
+//        batch.draw(background, 3200, 1920, 1600, 960);
+//        batch.draw(background, 4800, 2880, 1600, 960);
+//        batch.draw(background, 6400, 3840, 1600, 960);
+//        batch.draw(background, 8000, 4800, 1600, 960);
+//        batch.draw(background, 9600, 5760, 1600, 960);
+//        batch.draw(background, 11200, 6720, 1600, 960);
+//        batch.draw(background, 12800, 7680, 1600, 960);
+//        batch.draw(background, 14400, 8640, 1600, 960);
+
 
         for (Platform platform : platformList) {
             platform.draw(batch);
@@ -209,7 +240,9 @@ public class Stage {
         platformList.add(new Platform(blockImage, 154 * BLOCK_SIZE, 8 * BLOCK_SIZE, 1 * BLOCK_SIZE, 3 * BLOCK_SIZE));
         platformList.add(new Platform(blockImage, 156 * BLOCK_SIZE, 3 * BLOCK_SIZE, 27 * BLOCK_SIZE, 1 * BLOCK_SIZE));
     }
-
+    public void playerHolder (){
+        player = new Player(players);
+    }
     public void enemyHolder1 () {
         enemiesList.add(new KillableEnemy(enemyImage, 6 * BLOCK_SIZE, 4 * BLOCK_SIZE, 1 * BLOCK_SIZE, 1 * BLOCK_SIZE, 3f));
      //   enemiesList.add(new Enemy(enemyImage, 2 * BLOCK_SIZE, 4 * BLOCK_SIZE, 1 * BLOCK_SIZE, 1 * BLOCK_SIZE, 3f));
@@ -232,10 +265,26 @@ public class Stage {
         enemiesList.add(new Enemy(lavaEnemy, 50 * BLOCK_SIZE, 0 * BLOCK_SIZE, 10 * BLOCK_SIZE, 3 * BLOCK_SIZE, 0));
         enemiesList.add(new Enemy(lavaEnemy, 60 * BLOCK_SIZE, 0 * BLOCK_SIZE, 10 * BLOCK_SIZE, 3 * BLOCK_SIZE, 0));
         enemiesList.add(new Enemy(lavaEnemy, 70 * BLOCK_SIZE, 0 * BLOCK_SIZE, 10 * BLOCK_SIZE, 3 * BLOCK_SIZE, 0));
+        enemiesList.add(new Enemy(lavaEnemy, 80 * BLOCK_SIZE, 0 * BLOCK_SIZE, 10 * BLOCK_SIZE, 3 * BLOCK_SIZE, 0));
+        enemiesList.add(new Enemy(lavaEnemy, 90 * BLOCK_SIZE, 0 * BLOCK_SIZE, 10 * BLOCK_SIZE, 3 * BLOCK_SIZE, 0));
+        enemiesList.add(new Enemy(lavaEnemy, 100 * BLOCK_SIZE, 0 * BLOCK_SIZE, 10 * BLOCK_SIZE, 3 * BLOCK_SIZE, 0));
+        enemiesList.add(new Enemy(lavaEnemy, 110 * BLOCK_SIZE, 0 * BLOCK_SIZE, 10 * BLOCK_SIZE, 3 * BLOCK_SIZE, 0));
+        enemiesList.add(new Enemy(lavaEnemy, 120 * BLOCK_SIZE, 0 * BLOCK_SIZE, 10 * BLOCK_SIZE, 3 * BLOCK_SIZE, 0));
+        enemiesList.add(new Enemy(lavaEnemy, 130 * BLOCK_SIZE, 0 * BLOCK_SIZE, 10 * BLOCK_SIZE, 3 * BLOCK_SIZE, 0));
+        enemiesList.add(new Enemy(lavaEnemy, 140 * BLOCK_SIZE, 0 * BLOCK_SIZE, 10 * BLOCK_SIZE, 3 * BLOCK_SIZE, 0));
+        enemiesList.add(new Enemy(lavaEnemy, 150 * BLOCK_SIZE, 0 * BLOCK_SIZE, 10 * BLOCK_SIZE, 3 * BLOCK_SIZE, 0));
+        enemiesList.add(new Enemy(lavaEnemy, 160 * BLOCK_SIZE, 0 * BLOCK_SIZE, 10 * BLOCK_SIZE, 3 * BLOCK_SIZE, 0));
+        enemiesList.add(new Enemy(lavaEnemy, 170 * BLOCK_SIZE, 0 * BLOCK_SIZE, 10 * BLOCK_SIZE, 3 * BLOCK_SIZE, 0));
+        enemiesList.add(new Enemy(lavaEnemy, 180 * BLOCK_SIZE, 0 * BLOCK_SIZE, 10 * BLOCK_SIZE, 3 * BLOCK_SIZE, 0));
+        enemiesList.add(new Enemy(lavaEnemy, 190 * BLOCK_SIZE, 0 * BLOCK_SIZE, 10 * BLOCK_SIZE, 3 * BLOCK_SIZE, 0));
+        enemiesList.add(new Enemy(lavaEnemy, 200 * BLOCK_SIZE, 0 * BLOCK_SIZE, 10 * BLOCK_SIZE, 3 * BLOCK_SIZE, 0));
+
 
     }
-    public void playerHolder (){
-        player = new Player(playerImage);
+    public void backgroundHolder (){
+
+
+
     }
 
 

@@ -96,24 +96,27 @@ boolean isActive = true;
              float ratio = distanceTraveled/distanceTotal;
              float littleX = velocity.x*ratio;
              float littleY = velocity.y*ratio;
+
              hitbox.x+=(littleX);
              hitbox.y+=(littleY);
              if (currentCollisionInfo.side == CollisionInfo.Side.TOP){
+
+                 hitbox.y = currentCollisionInfo.object.hitbox.y + currentCollisionInfo.object.hitbox.height +.01f;
                  if (distanceTraveled==0) {
-                     hitbox.y += .1f;
+
 //                     ((Player) this).xVelocity =0;
                      return currentCollisionInfo;
                  }
-
-
-                 moveWithCollision(objects, new Vector2(velocity.x-littleX, (float) +.1));
+                 moveWithCollision(objects, new Vector2(velocity.x-littleX, 0));
              } else if (currentCollisionInfo.side == CollisionInfo.Side.BOTTOM) {
-
-                 moveWithCollision(objects, new Vector2(velocity.x-littleX, (float) -.1));
+                 hitbox.y = currentCollisionInfo.object.hitbox.y - hitbox.height - .01f;
+                 moveWithCollision(objects, new Vector2(velocity.x-littleX, 0));
              } else if (currentCollisionInfo.side == CollisionInfo.Side.RIGHT) {
-                 moveWithCollision(objects, new Vector2((float) +.1,velocity.y-littleY));
+                 hitbox.x = currentCollisionInfo.object.hitbox.x + currentCollisionInfo.object.hitbox.width + .01f;
+                 moveWithCollision(objects, new Vector2(0,velocity.y-littleY));
              }else {
-                 moveWithCollision(objects, new Vector2((float) -.1,velocity.y-littleY));
+                 hitbox.x = currentCollisionInfo.object.hitbox.x - hitbox.width - .01f;
+                 moveWithCollision(objects, new Vector2(0,velocity.y-littleY));
              }
              return currentCollisionInfo;
          }

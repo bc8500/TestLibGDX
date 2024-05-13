@@ -8,15 +8,23 @@ public class Images {
      List<String> imageList = new ArrayList<>();
      List<String> imageList2 = new ArrayList<>();
     List<String> imageList3 = new ArrayList<>();
+    List<String> imageList4 = new ArrayList<>();
+    List<String> imageList5 = new ArrayList<>();
      Random random = new Random();
+    public static void main(String[] args) {
+        int x = 1600;
+        int y = 960;
+        for (int i = 0; i < 20; i++) {
+            System.out.println(x+"x");
+            x += 1600;
+            System.out.println(y+"y");
+            y += 960;
+        }
 
+
+    }
     public Images() {
-        imageList.add("clownBen.JPG");
         imageList.add("masterchieftpose.jfif");
-        imageList.add("billy.jpg");
-        imageList.add("halo.jpg");
-        imageList.add("houseRainbow.jpg");
-        imageList.add("rocket leauge map.jpg");
         imageList.add("trevor.jpg");
         imageList.add("batman.jpg");
     }
@@ -35,7 +43,18 @@ public class Images {
 
      public String deathImage() {
         imageList3.add("minecraftDeathScene.jpg");
-        int randomNumber = random.nextInt(imageList2.size());
+        int randomNumber = random.nextInt(imageList3.size());
         return imageList3.get(randomNumber);
+    }
+    public String flagPole() {
+        imageList4.add("flag.jpg");
+        int randomNumber = random.nextInt(imageList4.size());
+        return imageList4.get(randomNumber);
+    }
+    public String playerImages() {
+        imageList5.add("clownBen.JPG");
+        imageList5.add("billy.jpg");
+        int randomNumber = random.nextInt(imageList5.size());
+        return imageList5.get(randomNumber);
     }
 }

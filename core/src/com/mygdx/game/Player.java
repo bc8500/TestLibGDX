@@ -20,7 +20,7 @@ public class Player extends CollidableObject{
     float xVelocity = 0;
     float yVelocity = 0;
     final float JUMP_HEIGHT = 200 / 40;
-    final float GRAVITY = 5 / 30f;
+    static float GRAVITY = 5 / 30f;
     final float FRICTION = 3 / 30f;
 
     public Player(String path) {
@@ -63,9 +63,10 @@ public class Player extends CollidableObject{
             canJump=false;
         }
         if(collisionInfo.side == CollisionInfo.Side.TOP) {
-
+            canJump = true;
            if (collisionInfo.object instanceof Platform){
                yVelocity = 0;
+
            }
 
             if(collisionInfo.object instanceof KillableEnemy){
@@ -113,10 +114,10 @@ public class Player extends CollidableObject{
                     if (!xMovement()) {
                         xVelocity -= FRICTION * 2 * Math.signum(xVelocity);
                     }
-                    //if (xVelocity > 0) hitbox.x++;
-                    //if (xV
-                    // elocity < 0) hitbox.x--;
-                    //if (yVelocity < 0) hitbox.y--;
+                    if (xVelocity > 0) hitbox.x++;
+                    if (xVelocity < 0) hitbox.x--;
+                    if (yVelocity < 0) hitbox.y--;
+                    if (yVelocity > 0) hitbox.y++;
                     hitbox.y++;
                     canJump = true;
                     yVelocity = 0;
