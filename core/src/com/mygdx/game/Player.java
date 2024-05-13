@@ -55,6 +55,16 @@ public class Player extends CollidableObject{
         if (Math.abs(xVelocity) < (speed - FRICTION)) {
             xVelocity = 0;
         }
+
+        for (int i = 0; i < platforms.size(); i++) {
+            if (platforms.get(i) instanceof Enemy){
+                if(platforms.get(i).hitbox.overlaps(hitbox) ){
+                    isActive=false;
+                }
+            }
+
+        }
+
         //moveWithCollision(platforms);
         CollisionInfo  collisionInfo = moveWithCollision(platforms, new Vector2(xVelocity, yVelocity));
         if (!(collisionInfo.side == CollisionInfo.Side.NONE || collisionInfo.side == CollisionInfo.Side.BOTTOM)){
@@ -93,14 +103,7 @@ public class Player extends CollidableObject{
             }
 
         }
-        for (int i = 0; i < platforms.size(); i++) {
-            if (platforms.get(i) instanceof Enemy){
-                if(platforms.get(i).hitbox.overlaps(hitbox) ){
-                    isActive=false;
-                }
-            }
 
-        }
 
     }
 

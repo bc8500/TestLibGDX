@@ -149,7 +149,7 @@ System.out.println(player.hitbox.x);
                 playerX = 400;
             }
             playerY = 200;
-            batch.draw(deathScreen, (float) (playerX - 400), (float) (playerY - 240 + 25), 800, 480 + 50);
+            batch.draw(deathScreen, (cameraX - 400), (cameraY - 240), 800, 480 + 50);
             player.dispose();
         }
         batch.end();
